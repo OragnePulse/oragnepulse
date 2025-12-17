@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orange Pulse | Ignite Your Potential</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Define brand colors using CSS variables */
+            --dynamic-black: #161415;
+            --honey-beige: #F6E7C9;
+            --apocalyptic-orange: #FF5A23;
+            --egg-liqueur: #E5D9B8;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            /* Use defined color variables */
+            background-color: var(--dynamic-black);
+            color: var(--honey-beige);
+            font-family: "Inter", sans-serif;
+            min-height: 100vh;
+        }
+
+        header, footer {
+            /* Semi-transparent background for sticky header */
+            background-color: rgba(22, 20, 21, 0.95);
+        }
+
+        .page-section {
+            padding: 4rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Hero specific styles */
+        .hero {
+            background-color: var(--dynamic-black);
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            line-height: 1.1;
+            font-weight: 900;
+            color: var(--honey-beige);
+            /* Subtle text shadow for depth */
+            text-shadow: 0 0 10px rgba(255, 90, 35, 0.4); 
+        }
+
+        /* Custom utility for the active menu state */
+        .menu-open {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: translateY(0);
+        }
+
+        .menu-closed {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            transform: translateY(-5px); /* Slight lift effect when closing */
+        }
+
+        /* Style for form inputs */
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            background-color: rgba(255, 255, 255, 0.05); /* Light transparent white */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--honey-beige);
+            border-radius: 0.5rem;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--apocalyptic-orange);
+            background-color: rgba(255, 90, 35, 0.1); /* Light orange focus background */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header / Navigation -->
+    <header class="sticky top-0 z-50 shadow-xl backdrop-blur-sm border-b border-white/10">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="py-4 flex items-center justify-between relative h-16">
+                <!-- Left: Logo -->
+                <div class="flex-shrink-0">
+                    <a href="#home" class="text-2xl font-black tracking-wider text-[--apocalyptic-orange] transition duration-200 hover:text-white">
+                        ORANGE<span class="text-[--honey-beige]">PULSE</span>
+                    </a>
+                </div>
+
+                <!-- Center: Dumbbell Icon (Shop Link) -->
+                <div class="absolute inset-x-0 mx-auto flex justify-center items-center w-fit">
+                    <a href="#shop-section" aria-label="Shop Gear" class="p-3 rounded-xl bg-[--apocalyptic-orange] hover:bg-orange-600 transition duration-300 shadow-lg border border-[--apocalyptic-orange] transform hover:scale-105">
+                        <!-- Dumbbell SVG Icon -->
+                        <svg class="w-8 h-8 text-[--dynamic-black]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <rect x="7" y="10" width="10" height="4" rx="1"/>
+                            <rect x="4" y="8" width="3" height="8" rx="1"/>
+                            <rect x="2" y="6" width="2" height="12" rx="1"/>
+                            <rect x="17" y="8" width="3" height="8" rx="1"/>
+                            <rect x="20" y="6" width="2" height="12" rx="1"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Right: Icons and Menu -->
+                <div class="relative flex items-center space-x-3 sm:space-x-4 flex-shrink-0">
+                    <!-- Search -->
+                    <button class="p-2 rounded-full hover:bg-white/10 transition" aria-label="Search">
+                        <svg class="w-6 h-6 text-[--honey-beige]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                    <!-- Cart -->
+                    <a href="#cart" class="p-2 rounded-full hover:bg-white/10 transition" aria-label="Cart">
+                        <svg class="w-6 h-6 text-[--honey-beige]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </a
+                    ><!-- Account -->
+                    <a href="#account" class="p-2 rounded-full hover:bg-white/10 transition" aria-label="Account">
+                        <svg class="w-6 h-6 text-[--honey-beige]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14c-4.418 0-8 3.582-8 8h16c0-4.418-3.582-8-8-8z"></path>
+                        </svg>
+                    </a>
+
+                    <!-- Hamburger Menu Button and Dropdown -->
+                    <div class="relative">
+                        <button id="menu-toggle" class="p-2 rounded-full hover:bg-white/10 transition" aria-label="Menu">
+                            <svg class="w-6 h-6 text-[--honey-beige]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                            </svg>
+                        </button>
+                        
+                        <!-- Dropdown Menu -->
+                        <div id="menu-dropdown" class="absolute right-0 mt-3 w-48 origin-top-right bg-[--dynamic-black] border border-white/20 rounded-xl shadow-2xl menu-closed transition duration-300 ease-out z-50">
+                            <nav class="p-2 space-y-1 text-sm font-medium">
+                                <a href="#hero" class="block p-2 rounded-lg text-[--honey-beige] hover:bg-[--apocalyptic-orange] hover:text-[--dynamic-black]">Home</a>
+                                <a href="#shop-section" class="block p-2 rounded-lg text-[--honey-beige] hover:bg-[--apocalyptic-orange] hover:text-[--dynamic-black]">Shop</a>
+                                <a href="#about-section" class="block p-2 rounded-lg bg-[--apocalyptic-orange]/20 text-[--apocalyptic-orange]">About</a>
+                                <a href="#contact-section" class="block p-2 rounded-lg text-[--honey-beige] hover:bg-[--apocalyptic-orange] hover:text-[--dynamic-black]">Contact</a>
+                                <a href="#legal" class="block p-2 rounded-lg text-[--honey-beige] hover:bg-[--apocalyptic-orange] hover:text-[--dynamic-black]">Legal</a>
+                                <a href="#newsletter" class="block p-2 rounded-lg text-[--honey-beige] hover:bg-[--apocalyptic-orange] hover:text-[--dynamic-black]">Newsletter</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero px-4">
+            <div class="max-w-4xl space-y-8">
+                <h1 class="hero-title">
+                    Ignite Your Potential. <span class="text-[--apocalyptic-orange]">Find Your Pulse.</span>
+                </h1>
+                <p class="text-xl max-w-2xl mx-auto text-white/90">
+                    Premium gear and expert guidance for every stage of your fitness journey—from beginner to advanced. We are Orange Pulse.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 pt-4">
+                    <a href="#shop-section" class="w-full sm:w-auto px-10 py-4 bg-[--apocalyptic-orange] text-[--dynamic-black] font-bold text-lg rounded-xl shadow-lg transition duration-300 transform hover:scale-[1.03] hover:bg-orange-600 focus:outline-none focus:ring-4 focus:ring-[--apocalyptic-orange]/50">
+                        Shop Premium Gear
+                    </a>
+                    <a href="#about-section" class="w-full sm:w-auto px-10 py-4 border-2 border-[--honey-beige] text-[--honey-beige] font-semibold text-lg rounded-xl transition duration-300 hover:bg-[--honey-beige]/10 hover:border-white focus:outline-none focus:ring-4 focus:ring-[--honey-beige]/50">
+                        Explore Our Mission
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Features/Audience Section -->
+        <section id="shop-section" class="page-section bg-[--dynamic-black] border-t border-white/10">
+            <h2 class="text-3xl font-extrabold text-center mb-12 text-[--apocalyptic-orange]">
+                Guidance for Every Phase
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Feature 1: Beginners -->
+                <div class="bg-white/5 p-6 rounded-xl border-t-4 border-[--apocalyptic-orange] shadow-xl hover:shadow-[0_0_20px_rgba(255,90,35,0.3)] transition duration-300">
+                    <h3 class="text-xl font-bold mb-3 text-[--apocalyptic-orange]">Beginners</h3>
+                    <p class="text-white/80 text-sm">Clear, foundational programs to help you start strong and build safe habits without confusion.</p>
+                </div>
+
+                <!-- Feature 2: Stuck Users -->
+                <div class="bg-white/5 p-6 rounded-xl border-t-4 border-[--apocalyptic-orange] shadow-xl hover:shadow-[0_0_20px_rgba(255,90,35,0.3)] transition duration-300">
+                    <h3 class="text-xl font-bold mb-3 text-[--apocalyptic-orange]">Plateau Breakers</h3>
+                    <p class="text-white/80 text-sm">Targeted advice and gear to shatter plateaus and inject new motivation into your routine.</p>
+                </div>
+
+                <!-- Feature 3: Influencers -->
+                <div class="bg-white/5 p-6 rounded-xl border-t-4 border-[--apocalyptic-orange] shadow-xl hover:shadow-[0_0_20px_rgba(255,90,35,0.3)] transition duration-300">
+                    <h3 class="text-xl font-bold mb-3 text-[--apocalyptic-orange]">Content Creators</h3>
+                    <p class="text-white/80 text-sm">Professional gear and resources to amplify your content and support your audience's growth.</p>
+                </div>
+
+                <!-- Feature 4: Advanced Users -->
+                <div class="bg-white/5 p-6 rounded-xl border-t-4 border-[--apocalyptic-orange] shadow-xl hover:shadow-[0_0_20px_rgba(255,90,35,0.3)] transition duration-300">
+                    <h3 class="text-xl font-bold mb-3 text-[--apocalyptic-orange]">Elite Performance</h3>
+                    <p class="text-white/80 text-sm">High-grade equipment and advanced analytics to optimize every aspect of your training.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section (Now detailed structure from user input in a card/grid format) -->
+        <section id="about-section" class="page-section bg-white/5 border-y border-white/10 max-w-7xl mx-auto">
+            <h2 class="text-4xl sm:text-5xl font-extrabold text-center mb-12 text-[--apocalyptic-orange] border-b-2 border-[--apocalyptic-orange]/50 pb-3">About Orange Pulse</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Who We Are Card (Inspired by Footer Column Style) -->
+                <div class="bg-black/20 p-6 rounded-xl border border-white/10 shadow-lg h-full">
+                    <h3 class="text-xl font-bold mb-4 text-[--apocalyptic-orange]">Who We Are</h3>
+                    <p class="text-sm text-white/90 leading-normal text-justify">
+                        Orange Pulse is a fitness brand dedicated to helping <strong>beginners</strong>, people who feel <strong>stuck</strong> in their fitness journey, <strong>influencers</strong>, and <strong>advanced users</strong> excel further. We provide quality fitness products, guidance, and motivation tailored to every stage of your journey.
+                    </p>
+                </div>
+
+                <!-- Our Mission Card (Inspired by Footer Column Style) -->
+                <div class="bg-black/20 p-6 rounded-xl border border-white/10 shadow-lg h-full">
+                    <h3 class="text-xl font-bold mb-4 text-[--apocalyptic-orange]">Our Mission</h3>
+                    <p class="text-sm text-white/90 leading-normal text-justify">
+                        Our mission is to empower everyone—from first-timers to seasoned athletes—to reach their full potential. We focus on providing tools, knowledge, and support that make fitness effective, sustainable, and rewarding.
+                    </p>
+                </div>
+                
+                <!-- Our Values Card (Spans 2 columns on large screens to display the list) -->
+                <div class="lg:col-span-2 bg-black/20 p-6 rounded-xl border border-white/10 shadow-lg h-full">
+                    <h3 class="text-xl font-bold mb-4 text-[--apocalyptic-orange]">Our Core Values</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-sm text-white/90">
+                        
+                        <!-- Value Items maintain the orange border accent -->
+                        <div class="p-3 border-l-4 border-[--apocalyptic-orange] rounded bg-white/5">
+                            <strong class="text-[--honey-beige]">Guidance:</strong> Clear, practical advice for all levels.
+                        </div>
+                        <div class="p-3 border-l-4 border-[--apocalyptic-orange] rounded bg-white/5">
+                            <strong class="text-[--honey-beige]">Motivation:</strong> Inspiring you to push past plateaus.
+                        </div>
+                        <div class="p-3 border-l-4 border-[--apocalyptic-orange] rounded bg-white/5">
+                            <strong class="text-[--honey-beige]">Community:</strong> A network of like-minded enthusiasts.
+                        </div>
+                        <div class="p-3 border-l-4 border-[--apocalyptic-orange] rounded bg-white/5">
+                            <strong class="text-[--honey-beige]">Excellence:</strong> Helping users advance their skills and health.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Our Story Card (Inspired by Footer Column Style) -->
+                <div class="bg-black/20 p-6 rounded-xl border border-white/10 shadow-lg h-full">
+                    <h3 class="text-xl font-bold mb-4 text-[--apocalyptic-orange]">Our Story</h3>
+                    <p class="text-sm text-white/90 leading-normal text-justify">
+                        Founded in <strong>2025</strong>, Orange Pulse began with the goal of supporting people at every stage of their fitness journey. We recognized that many struggle to start, plateau, or want to reach advanced levels—and we aim to make that path easier, safer, and more inspiring.
+                    </p>
+                </div>
+
+                <!-- Meet the Team Card (Inspired by Footer Column Style) -->
+                <div class="bg-black/20 p-6 rounded-xl border border-white/10 shadow-lg h-full">
+                    <h3 class="text-xl font-bold mb-4 text-[--apocalyptic-orange]">Meet the Team</h3>
+                    <p class="text-sm text-white/90 leading-normal text-justify">
+                        Our team blends fitness enthusiasts, trainers, wellness educators, and product designers, all committed to helping you perform at your best. We are united by a passion for fitness and a dedication to quality.
+                    </p>
+                </div>
+
+                <!-- Extra Cards to fill the grid space and maintain aesthetic integrity on large screens -->
+                <div class="hidden lg:block bg-black/20 p-6 rounded-xl border border-white/10 shadow-lg h-full">
+                    <h3 class="text-xl font-bold mb-4 text-[--apocalyptic-orange]">Join Our Team</h3>
+                    <p class="text-sm text-white/90 leading-normal text-justify">
+                        We are always looking for passionate people to join our mission. If you live and breathe fitness, check our careers page for open roles!
+                    </p>
+                </div>
+                <div class="hidden lg:block bg-black/20 p-6 rounded-xl border border-white/10 shadow-lg h-full">
+                    <h3 class="text-xl font-bold mb-4 text-[--apocalyptic-orange]">Partnerships</h3>
+                    <p class="text-sm text-white/90 leading-normal text-justify">
+                        Interested in collaborating? We partner with select brands and athletes who share our commitment to quality and excellence in the fitness space.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Us Section -->
+        <section id="contact-section" class="page-section bg-[--dynamic-black]">
+            <h2 class="text-3xl font-extrabold text-center mb-12 text-[--apocalyptic-orange]">
+                Get In Touch
+            </h2>
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Contact Information -->
+                <div class="space-y-6">
+                    <h3 class="text-2xl font-bold mb-4 text-[--honey-beige]">Contact Details</h3>
+                    <p class="text-white/90">
+                        We're here to help you with product inquiries, order support, or fitness advice. Reach out and connect with the Orange Pulse team.
+                    </p>
+                    <div class="space-y-3">
+                        <p class="flex items-center text-white/90">
+                            <!-- Email Icon -->
+                            <span class="text-[--apocalyptic-orange] mr-3">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-6 13h-2a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2v10a2 2 0 01-2 2z"></path></svg>
+                            </span>
+                            Email: support@orangepulse.com
+                        </p>
+                        <p class="flex items-center text-white/90">
+                            <!-- Phone Icon -->
+                            <span class="text-[--apocalyptic-orange] mr-3">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3v18m-4-7h8"></path></svg>
+                            </span>
+                            Phone: +1 (555) PULSE-01
+                        </p>
+                        <p class="flex items-start text-white/90">
+                            <!-- Location Icon -->
+                            <span class="text-[--apocalyptic-orange] mr-3 mt-1">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            </span>
+                            Address: 45 Fitness Way, Suite 101, Pulsing City, FL 33101
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-white/5 p-6 rounded-xl shadow-2xl">
+                    <form onsubmit="event.preventDefault(); alert('Thank you! Your message has been sent to Orange Pulse.');">
+                        <div class="mb-4">
+                            <label for="name" class="block text-sm font-medium mb-1">Full Name</label>
+                            <input type="text" id="name" class="form-input" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-sm font-medium mb-1">Email Address</label>
+                            <input type="email" id="email" class="form-input" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="message" class="block text-sm font-medium mb-1">Message</label>
+                            <textarea id="message" rows="4" class="form-input" required></textarea>
+                        </div>
+                        <button type="submit" class="w-full px-8 py-3 bg-[--apocalyptic-orange] text-[--dynamic-black] font-bold text-lg rounded-xl shadow-lg transition duration-300 transform hover:scale-[1.01] hover:bg-orange-600 focus:outline-none focus:ring-4 focus:ring-[--apocalyptic-orange]/50">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Call to Action Section (Retained from previous version) -->
+        <section class="page-section text-center border-t border-white/10 mt-8 pt-8">
+            <h2 class="text-4xl font-extrabold mb-6 text-[--honey-beige]">Ready to Elevate?</h2>
+            <p class="text-lg max-w-3xl mx-auto mb-8 text-white/90">
+                Join the Orange Pulse movement and transform how you approach fitness. Quality, support, and results are just a click away.
+            </p>
+             <a href="#shop-section" class="inline-block px-8 py-3 bg-[--apocalyptic-orange] text-[--dynamic-black] font-bold text-lg rounded-xl shadow-2xl transition duration-300 transform hover:scale-105 hover:bg-orange-600 focus:outline-none focus:ring-4 focus:ring-[--apocalyptic-orange]/50">
+                Visit Our Shop Now
+            </a>
+        </section>
+    </main>
+
+    <!-- Comprehensive Footer -->
+    <footer class="bg-[--dynamic-black] pt-16 pb-6 mt-12 border-t border-white/10">
+        <!-- Content Wrapper: Ensures content is centered and has responsive padding -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Main Footer Content Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 border-b border-white/10 pb-10">
+                
+                <!-- Column 1: Logo & Tagline -->
+                <div class="col-span-2 lg:col-span-1 space-y-4">
+                    <a href="#hero" class="text-3xl font-black tracking-wider text-[--apocalyptic-orange] transition duration-200 hover:text-white">
+                        ORANGE<span class="text-[--honey-beige]">PULSE</span>
+                    </a>
+                    <p class="text-sm text-white/70">
+                        Ignite Your Potential. Find Your Pulse.
+                    </p>
+                    <div class="flex space-x-4">
+                        <!-- Social Media Placeholder Icons (Facebook, Instagram, Twitter) -->
+                        <a href="#facebook" class="text-[--honey-beige] hover:text-[--apocalyptic-orange] transition" aria-label="Facebook">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-1.2 1-2h3v-3h-3c-3 0-4 1.5-4 4v3.5H9v4h5V22h4v-8.5h-4z"/></svg>
+                        </a>
+                        <a href="#instagram" class="text-[--honey-beige] hover:text-[--apocalyptic-orange] transition" aria-label="Instagram">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7.8 2h8.4C18.1 2 20 3.9 20 6.2v8.4c0 2.3-1.9 4.2-4.2 4.2H7.8C5.5 18.8 3.6 16.9 3.6 14.6V6.2C3.6 3.9 5.5 2 7.8 2zm-.2 2.2c-.9 0-1.6.7-1.6 1.6s.7 1.6 1.6 1.6 1.6-.7 1.6-1.6-.7-1.6-1.6-1.6zm.2 1.9c-2 0-3.6 1.6-3.6 3.6v.5h.7c.4 0 .7.3.7.7v2.5c0 .4-.3.7-.7.7h-.7v.5c0 2 1.6 3.6 3.6 3.6h8.4c2 0 3.6-1.6 3.6-3.6v-8.4c0-2-1.6-3.6-3.6-3.6H7.8zm11.3 6.9c0-.4-.3-.7-.7-.7h-2.5c-.4 0-.7.3-.7.7v2.5c0 .4.3.7.7.7h2.5c.4 0 .7-.3.7-.7v-2.5z"/></svg>
+                        </a>
+                        <a href="#twitter" class="text-[--honey-beige] hover:text-[--apocalyptic-orange] transition" aria-label="Twitter">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.47 5.09c.47-.13.9.04 1.35.33.25.16.47.38.7.67.24.3.44.62.63.98.05.09.07.15.07.24 0 .3-.1.54-.3.72-.2.18-.46.27-.8.27H6.5c-.7 0-1.25-.26-1.7-1.12-.17-.33-.26-.7-.27-1.1s.05-.7.2-1.04c.15-.34.36-.63.63-.87.27-.24.57-.42.9-.53.33-.11.66-.17 1-.18.35 0 .7.05 1.05.15.35.1.7.25 1.05.45.35.2.7.45 1.05.75.35.3.7.6 1.05.95.12.11.25.16.37.16.12 0 .25-.05.37-.16.35-.35.7-.7 1.05-1.05.35-.35.7-.6 1.05-.75.35-.15.7-.25 1.05-.35.33-.1.66-.15 1-.15.35 0 .7.06 1.05.18.47-.13.9-.04 1.35-.33.25-.16.47-.38.7-.67.24-.3.44-.62.63-.98.05-.09.07-.15.07-.24 0-.3-.1-.54-.3-.72-.2-.18-.46-.27-.8-.27H6.5c-.7 0-1.25-.26-1.7-1.12-.17-.33-.26-.7-.27-1.1s.05-.7.2-1.04c.15-.34.36-.63.63-.87.27-.24.57-.42.9-.53.33-.11.66-.17 1-.18.35 0 .7.05 1.05.15.35.1.7.25 1.05.45.35.2.7.45 1.05.75.35.3.7.6 1.05.95zM6.5 20c.35 0 .7-.05 1.05-.15.35-.1.7-.25 1.05-.45.35-.2.7-.45 1.05-.75.35-.3.7-.6 1.05-.95.12-.11.25-.16.37-.16.12 0 .25.05.37.16.35.35.7.7 1.05 1.05.35.35.7.6 1.05.75.35.15.7.25 1.05.35.33.1.66.15 1 .15.35 0 .7-.06 1.05-.18.47-.13.9-.04 1.35-.33.25-.16.47-.38.7-.67.24-.3.44-.62.63-.98.05-.09.07-.15.07-.24 0-.3-.1-.54-.3-.72-.2-.18-.46-.27-.8-.27H6.5c-.7 0-1.25-.26-1.7-1.12-.17-.33-.26-.7-.27-1.1s.05-.7.2-1.04c.15-.34.36-.63.63-.87.27-.24.57-.42.9-.53.33-.11.66-.17 1-.18.35 0 .7.05 1.05.15.35.1.7.25 1.05.45.35.2.7.45 1.05.75.35.3.7.6 1.05.95zM12 2c-5.52 0-10 4.48-10 10s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Column 2: Quick Links -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-[--apocalyptic-orange]">Quick Links</h4>
+                    <ul class="space-y-2 text-sm text-white/90">
+                        <li><a href="#hero" class="hover:text-[--apocalyptic-orange] transition">Home</a></li>
+                        <li><a href="#shop-section" class="hover:text-[--apocalyptic-orange] transition">Shop Now</a></li>
+                        <li><a href="#about-section" class="hover:text-[--apocalyptic-orange] transition">About Us</a></li>
+                        <li><a href="#contact-section" class="hover:text-[--apocalyptic-orange] transition">Get In Touch</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Customer Support -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-[--apocalyptic-orange]">Support</h4>
+                    <ul class="space-y-2 text-sm text-white/90">
+                        <li><a href="#account" class="hover:text-[--apocalyptic-orange] transition">My Account</a></li>
+                        <li><a href="#cart" class="hover:text-[--apocalyptic-orange] transition">View Cart</a></li>
+                        <li><a href="#faq" class="hover:text-[--apocalyptic-orange] transition">FAQ</a></li>
+                        <li><a href="#shipping" class="hover:text-[--apocalyptic-orange] transition">Shipping & Returns</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Legal -->
+                <div class="lg:col-span-1">
+                    <h4 class="text-lg font-bold mb-4 text-[--apocalyptic-orange]">Legal</h4>
+                    <ul class="space-y-2 text-sm text-white/90">
+                        <li><a href="#privacy" class="hover:text-[--apocalyptic-orange] transition">Privacy Policy</a></li>
+                        <li><a href="#terms" class="hover:text-[--apocalyptic-orange] transition">Terms of Service</a></li>
+                        <li><a href="#legal" class="hover:text-[--apocalyptic-orange] transition">Cookie Policy</a></li>
+                        <li><a href="#compliance" class="hover:text-[--apocalyptic-orange] transition">Compliance</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 5 (Mobile: spans 2 columns): Contact Info -->
+                <div class="col-span-2 md:col-span-4 lg:col-span-1 space-y-4">
+                    <h4 class="text-lg font-bold mb-4 text-[--apocalyptic-orange]">Contact</h4>
+                    <p class="text-sm flex items-center text-white/80">
+                         <!-- Email Icon -->
+                        <svg class="w-5 h-5 text-[--apocalyptic-orange] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-6 13h-2a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2v10a2 2 0 01-2 2z"></path></svg>
+                        support@orangepulse.com
+                    </p>
+                    <p class="text-sm flex items-center text-white/80">
+                        <!-- Phone Icon -->
+                        <svg class="w-5 h-5 text-[--apocalyptic-orange] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3v18m-4-7h8"></path></svg>
+                        +1 (555) PULSE-01
+                    </p>
+                </div>
+            </div>
+
+            <!-- Bottom Copyright Bar -->
+            <div class="text-center pt-6">
+                <p class="text-xs text-white/50">
+                    © 2025 Orange Pulse, LLC. All Rights Reserved. | Designed and built with a passion for fitness.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Menu Toggling -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.getElementById('menu-toggle');
+            const menuDropdown = document.getElementById('menu-dropdown');
+
+            // Function to toggle the menu visibility
+            const toggleMenu = () => {
+                const isOpen = menuDropdown.classList.contains('menu-open');
+                
+                if (isOpen) {
+                    // Close the menu
+                    menuDropdown.classList.remove('menu-open');
+                    menuDropdown.classList.add('menu-closed');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                } else {
+                    // Open the menu
+                    menuDropdown.classList.remove('menu-closed');
+                    menuDropdown.classList.add('menu-open');
+                    menuToggle.setAttribute('aria-expanded', 'true');
+                }
+            };
+
+            // Event listener for the toggle button
+            menuToggle.addEventListener('click', (event) => {
+                event.stopPropagation(); // Prevents document click listener from immediately closing it
+                toggleMenu();
+            });
+
+            // Close the menu when clicking outside of it
+            document.addEventListener('click', (event) => {
+                if (menuDropdown.classList.contains('menu-open') && !menuDropdown.contains(event.target) && event.target !== menuToggle) {
+                    toggleMenu();
+                }
+            });
+
+            // Close the menu when a link inside is clicked
+            menuDropdown.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (menuDropdown.classList.contains('menu-open')) {
+                        toggleMenu();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

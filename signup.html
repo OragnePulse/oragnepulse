@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Define Orange Pulse color variable */
+        :root {
+            --apocalyptic-orange: #FF5A23;
+            --dynamic-black: #161415;
+        }
+
+        /* Custom styles for the Inter font and smooth transitions */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+        }
+        input:focus {
+            outline: none;
+            /* Using a dark focus ring for contrast against the orange background */
+            box-shadow: 0 0 0 2px rgba(22, 20, 21, 0.5); /* Dynamic Black focus ring */
+            border-color: var(--dynamic-black);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <!-- Signup Card Container - Marked Orange -->
+    <div 
+        class="w-full max-w-md p-8 md:p-10 rounded-xl shadow-2xl border border-orange-700 transition-all duration-300"
+        style="background-color: var(--apocalyptic-orange);"
+    >
+        <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-2 text-center">
+            Join Us Today
+        </h1>
+        <p class="text-center text-orange-100 mb-8">
+            Create your account in seconds.
+        </p>
+
+        <!-- Form -->
+        <form id="signupForm" class="space-y-6">
+
+            <!-- Full Name Input -->
+            <div>
+                <label for="name" class="block text-sm font-medium text-white mb-1">Full Name</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-900 focus:ring-black focus:border-black transition duration-150 ease-in-out"
+                    placeholder="John Doe"
+                >
+            </div>
+
+            <!-- Email Input -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-white mb-1">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-900 focus:ring-black focus:border-black transition duration-150 ease-in-out"
+                    placeholder="you@example.com"
+                >
+            </div>
+
+            <!-- Password Input -->
+            <div>
+                <label for="password" class="block text-sm font-medium text-white mb-1">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    minlength="8"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-900 focus:ring-black focus:border-black transition duration-150 ease-in-out"
+                    placeholder="Minimum 8 characters"
+                >
+            </div>
+
+            <!-- Confirm Password Input -->
+            <div>
+                <label for="confirmPassword" class="block text-sm font-medium text-white mb-1">Confirm Password</label>
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-900 focus:ring-black focus:border-black transition duration-150 ease-in-out"
+                    placeholder="Re-enter your password"
+                >
+            </div>
+
+            <!-- Error/Success Message Box -->
+            <div id="messageBox" class="hidden p-3 rounded-lg text-sm transition-opacity duration-300 ease-in-out"></div>
+
+
+            <!-- Submit Button (Black for contrast) -->
+            <button
+                type="submit"
+                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-md text-base font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition duration-150 ease-in-out transform hover:scale-[1.01] active:scale-[0.99]"
+            >
+                Sign Up
+            </button>
+        </form>
+
+        <!-- Login Link -->
+        <div class="mt-6 text-center">
+            <p class="text-sm text-orange-100">
+                Already have an account?
+                <a href="#" class="font-medium text-white hover:text-orange-200 transition duration-150 ease-in-out">
+                    Log In
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const messageBox = document.getElementById('messageBox');
+
+            // Clear previous messages and hide the box
+            messageBox.classList.add('hidden', 'opacity-0');
+            messageBox.textContent = '';
+            messageBox.className = 'p-3 rounded-lg text-sm transition-opacity duration-300 ease-in-out';
+
+            if (password !== confirmPassword) {
+                // Show Error
+                messageBox.classList.remove('hidden');
+                messageBox.classList.add('bg-red-100', 'text-red-700', 'opacity-100');
+                messageBox.textContent = 'Error: Passwords do not match.';
+            } else {
+                // Mock Success
+                messageBox.classList.remove('hidden');
+                messageBox.classList.add('bg-green-100', 'text-green-700', 'opacity-100');
+                messageBox.textContent = 'Success! Account creation simulated for ' + document.getElementById('email').value + '.';
+                // Optionally clear the form here
+                // event.target.reset();
+            }
+        });
+    </script>
+</body>
+</html>

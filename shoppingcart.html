@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orange Pulse | Your Shopping Cart</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Define brand colors for Light Theme */
+            --light-white: #ffffff;
+            --dark-text: #1f2937; /* Gray-800 */
+            --apocalyptic-orange: #FF5A23;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            /* Use defined color variables for light background */
+            background-color: var(--light-white);
+            color: var(--dark-text);
+            font-family: "Inter", sans-serif;
+            min-height: 100vh;
+        }
+
+        header, footer {
+            /* Semi-transparent background for sticky header */
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+        
+        /* Custom styles for Menu Toggling */
+        .menu-open {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: translateY(0);
+        }
+        .menu-closed {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            transform: translateY(-5px);
+        }
+        
+        /* Custom scrollbar for better aesthetics in the cart items list */
+        .cart-items::-webkit-scrollbar {
+            width: 8px;
+        }
+        .cart-items::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 90, 35, 0.6); /* Orange accent */
+            border-radius: 4px;
+        }
+        .cart-items::-webkit-scrollbar-track {
+            background-color: #f3f4f6; /* Gray-100 track */
+        }
+    </style>
+</head>
+<body class="min-h-screen antialiased">
+
+    <!-- Header / Navigation (Light Theme) -->
+    <header class="sticky top-0 z-50 shadow-lg backdrop-blur-sm border-b border-gray-100">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="py-4 flex items-center justify-between relative h-16">
+                <!-- Left: Logo -->
+                <div class="flex-shrink-0">
+                    <a href="#home" class="text-2xl font-black tracking-wider text-[--apocalyptic-orange] transition duration-200 hover:text-gray-800">
+                        ORANGE<span class="text-gray-800">PULSE</span>
+                    </a>
+                </div>
+
+                <!-- Center: Dumbbell Icon (Shop Link) -->
+                <div class="absolute inset-x-0 mx-auto flex justify-center items-center w-fit">
+                    <a href="#shop-section" aria-label="Shop Gear" class="p-3 rounded-xl bg-[--apocalyptic-orange] hover:bg-orange-600 transition duration-300 shadow-lg border border-[--apocalyptic-orange] transform hover:scale-105">
+                        <!-- Dumbbell SVG Icon -->
+                        <svg class="w-8 h-8 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <rect x="7" y="10" width="10" height="4" rx="1"/>
+                            <rect x="4" y="8" width="3" height="8" rx="1"/>
+                            <rect x="2" y="6" width="2" height="12" rx="1"/>
+                            <rect x="17" y="8" width="3" height="8" rx="1"/>
+                            <rect x="20" y="6" width="2" height="12" rx="1"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Right: Icons and Menu -->
+                <div class="relative flex items-center space-x-3 sm:space-x-4 flex-shrink-0">
+                    <!-- Search -->
+                    <button class="p-2 rounded-full hover:bg-gray-100 transition" aria-label="Search">
+                        <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                    <!-- Cart (Highlighted on cart page) -->
+                    <a href="#" class="p-2 rounded-full bg-[--apocalyptic-orange]/10 transition" aria-label="Cart">
+                        <svg class="w-6 h-6 text-[--apocalyptic-orange]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </a>
+                    <!-- Account -->
+                    <a href="#account" class="p-2 rounded-full hover:bg-gray-100 transition" aria-label="Account">
+                        <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14c-4.418 0-8 3.582-8 8h16c0-4.418-3.582-8-8-8z"></path>
+                        </svg>
+                    </a>
+
+                    <!-- Hamburger Menu Button and Dropdown -->
+                    <div class="relative">
+                        <button id="menu-toggle" class="p-2 rounded-full hover:bg-gray-100 transition" aria-label="Menu">
+                            <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                            </svg>
+                        </button>
+                        
+                        <!-- Dropdown Menu -->
+                        <div id="menu-dropdown" class="absolute right-0 mt-3 w-48 origin-top-right bg-white border border-gray-200 rounded-xl shadow-2xl menu-closed transition duration-300 ease-out z-50">
+                            <nav class="p-2 space-y-1 text-sm font-medium">
+                                <a href="#home" class="block p-2 rounded-lg text-gray-700 hover:bg-[--apocalyptic-orange] hover:text-white">Home</a>
+                                <a href="#shop-section" class="block p-2 rounded-lg text-gray-700 hover:bg-[--apocalyptic-orange] hover:text-white">Shop</a>
+                                <a href="#about-section" class="block p-2 rounded-lg text-gray-700 hover:bg-[--apocalyptic-orange] hover:text-white">About</a>
+                                <a href="#contact-section" class="block p-2 rounded-lg text-gray-700 hover:bg-[--apocalyptic-orange] hover:text-white">Contact</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT: Cart Page -->
+    <main>
+        <div id="app" class="container mx-auto p-4 md:p-8 max-w-7xl">
+            <h1 class="text-4xl font-extrabold mb-8 text-center text-gray-900">
+                Your Shopping Cart (<span id="item-count">0</span> items)
+            </h1>
+
+            <div class="flex flex-col lg:flex-row gap-8">
+
+                <!-- Cart Items Container -->
+                <div class="lg:w-2/3 bg-white p-6 shadow-xl rounded-2xl border border-gray-200">
+                    <div id="cart-items" class="cart-items space-y-6 max-h-[70vh] overflow-y-auto pr-2">
+                        <!-- Cart items will be rendered here by JavaScript -->
+                        <div class="text-center p-8 text-gray-400" id="loading-indicator">Loading cart...</div>
+                    </div>
+                </div>
+
+                <!-- Order Summary Sidebar -->
+                <div class="lg:w-1/3">
+                    <div class="bg-gray-50 p-6 shadow-xl rounded-2xl sticky top-24 border border-gray-200">
+                        <h2 class="text-xl font-semibold mb-4 border-b pb-3 border-gray-200 text-gray-800">Order Summary</h2>
+
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Subtotal (<span id="summary-item-count">0</span> items)</span>
+                                <span class="font-medium text-gray-800" id="subtotal">$0.00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Shipping Estimate</span>
+                                <span class="font-medium text-green-600" id="shipping-cost">$10.00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Tax Estimate (8%)</span>
+                                <span class="font-medium text-gray-800" id="tax-estimate">$0.00</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-6 border-t border-gray-200 flex justify-between items-center">
+                            <span class="text-lg font-bold">Order Total</span>
+                            <span class="text-2xl font-extrabold text-[--apocalyptic-orange]" id="total">$0.00</span>
+                        </div>
+
+                        <button id="checkout-button" class="w-full mt-6 py-3 bg-[--apocalyptic-orange] text-white font-bold rounded-xl hover:bg-orange-600 transition duration-150 shadow-lg shadow-orange-700/50" disabled>
+                            Proceed to Checkout
+                        </button>
+
+                        <div id="message-box" class="mt-4 hidden p-3 text-center bg-red-100 text-red-700 rounded-lg border border-red-300"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Comprehensive Footer (Light Theme) -->
+    <footer class="bg-gray-100 pt-16 pb-6 mt-12 border-t border-gray-200 text-gray-700">
+        <!-- Content Wrapper: Ensures content is centered and has responsive padding -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Main Footer Content Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 border-b border-gray-200 pb-10">
+                
+                <!-- Column 1: Logo & Tagline -->
+                <div class="col-span-2 lg:col-span-1 space-y-4">
+                    <a href="#hero" class="text-3xl font-black tracking-wider text-[--apocalyptic-orange] transition duration-200 hover:text-gray-900">
+                        ORANGE<span class="text-gray-800">PULSE</span>
+                    </a>
+                    <p class="text-sm text-gray-600">
+                        Ignite Your Potential. Find Your Pulse.
+                    </p>
+                    <div class="flex space-x-4">
+                        <!-- Social Media Placeholder Icons (Facebook, Instagram, Twitter) -->
+                        <a href="#facebook" class="text-gray-700 hover:text-[--apocalyptic-orange] transition" aria-label="Facebook">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-1.2 1-2h3v-3h-3c-3 0-4 1.5-4 4v3.5H9v4h5V22h4v-8.5h-4z"/></svg>
+                        </a>
+                        <a href="#instagram" class="text-gray-700 hover:text-[--apocalyptic-orange] transition" aria-label="Instagram">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7.8 2h8.4C18.1 2 20 3.9 20 6.2v8.4c0 2.3-1.9 4.2-4.2 4.2H7.8C5.5 18.8 3.6 16.9 3.6 14.6V6.2C3.6 3.9 5.5 2 7.8 2zm-.2 2.2c-.9 0-1.6.7-1.6 1.6s.7 1.6 1.6 1.6 1.6-.7 1.6-1.6-.7-1.6-1.6-1.6zm.2 1.9c-2 0-3.6 1.6-3.6 3.6v.5h.7c.4 0 .7.3.7.7v2.5c0 .4-.3.7-.7.7h-.7v.5c0 2 1.6 3.6 3.6 3.6h8.4c2 0 3.6-1.6 3.6-3.6v-8.4c0-2-1.6-3.6-3.6-3.6H7.8zm11.3 6.9c0-.4-.3-.7-.7-.7h-2.5c-.4 0-.7.3-.7.7v2.5c0 .4.3.7.7.7h2.5c.4 0 .7-.3.7-.7v-2.5z"/></svg>
+                        </a>
+                        <a href="#twitter" class="text-gray-700 hover:text-[--apocalyptic-orange] transition" aria-label="Twitter">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.47 5.09c.47-.13.9.04 1.35.33.25.16.47.38.7.67.24.3.44.62.63.98.05.09.07.15.07.24 0 .3-.1.54-.3.72-.2.18-.46.27-.8.27H6.5c-.7 0-1.25-.26-1.7-1.12-.17-.33-.26-.7-.27-1.1s.05-.7.2-1.04c.15-.34.36-.63.63-.87.27-.24.57-.42.9-.53.33-.11.66-.17 1-.18.35 0 .7.05 1.05.15.35.1.7.25 1.05.45.35.2.7.45 1.05.75.35.3.7.6 1.05.95.12.11.25.16.37.16.12 0 .25-.05.37-.16.35-.35.7-.7 1.05-1.05.35-.35.7-.6 1.05-.75.35-.15.7-.25 1.05-.35.33-.1.66-.17 1-.18.35 0 .7.06 1.05.18.47-.13.9-.04 1.35-.33.25-.16.47-.38.7-.67.24-.3.44-.62.63-.98.05-.09.07-.15.07-.24 0-.3-.1-.54-.3-.72-.2-.18-.46-.27-.8-.27H6.5c-.7 0-1.25-.26-1.7-1.12-.17-.33-.26-.7-.27-1.1s.05-.7.2-1.04c.15-.34.36-.63.63-.87.27-.24.57-.42.9-.53.33-.11.66-.17 1-.18.35 0 .7.05 1.05.15.35.1.7.25 1.05.45.35.2.7.45 1.05.75.35.3.7.6 1.05.95zM6.5 20c.35 0 .7-.05 1.05-.15.35-.1.7-.25 1.05-.45.35-.2.7-.45 1.05-.75.35-.3.7-.6 1.05-.95.12-.11.25-.16.37-.16.12 0 .25.05.37.16.35.35.7.7 1.05 1.05.35.35.7.6 1.05.75.35.15.7.25 1.05.35.33.1.66.15 1 .15.35 0 .7-.06 1.05-.18.47-.13.9-.04 1.35-.33.25-.16.47-.38.7-.67.24-.3.44-.62.63-.98.05-.09.07-.15.07-.24 0-.3-.1-.54-.3-.72-.2-.18-.46-.27-.8-.27H6.5c-.7 0-1.25-.26-1.7-1.12-.17-.33-.26-.7-.27-1.1s.05-.7.2-1.04c.15-.34.36-.63.63-.87.27-.24.57-.42.9-.53.33-.11.66-.17 1-.18.35 0 .7.05 1.05.15.35.1.7.25 1.05.45.35.2.7.45 1.05.75zM12 2c-5.52 0-10 4.48-10 10s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Column 2: Quick Links -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-[--apocalyptic-orange]">Quick Links</h4>
+                    <ul class="space-y-2 text-sm text-gray-800">
+                        <li><a href="#hero" class="hover:text-[--apocalyptic-orange] transition">Home</a></li>
+                        <li><a href="#shop-section" class="hover:text-[--apocalyptic-orange] transition">Shop Now</a></li>
+                        <li><a href="#about-section" class="hover:text-[--apocalyptic-orange] transition">About Us</a></li>
+                        <li><a href="#contact-section" class="hover:text-[--apocalyptic-orange] transition">Get In Touch</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Customer Support -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-[--apocalyptic-orange]">Support</h4>
+                    <ul class="space-y-2 text-sm text-gray-800">
+                        <li><a href="#account" class="hover:text-[--apocalyptic-orange] transition">My Account</a></li>
+                        <li><a href="#" class="hover:text-[--apocalyptic-orange] transition">View Cart</a></li>
+                        <li><a href="#faq" class="hover:text-[--apocalyptic-orange] transition">FAQ</a></li>
+                        <li><a href="#shipping" class="hover:text-[--apocalyptic-orange] transition">Shipping & Returns</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Legal -->
+                <div class="lg:col-span-1">
+                    <h4 class="text-lg font-bold mb-4 text-[--apocalyptic-orange]">Legal</h4>
+                    <ul class="space-y-2 text-sm text-gray-800">
+                        <li><a href="#privacy" class="hover:text-[--apocalyptic-orange] transition">Privacy Policy</a></li>
+                        <li><a href="#terms" class="hover:text-[--apocalyptic-orange] transition">Terms of Service</a></li>
+                        <li><a href="#legal" class="hover:text-[--apocalyptic-orange] transition">Cookie Policy</a></li>
+                        <li><a href="#compliance" class="hover:text-[--apocalyptic-orange] transition">Compliance</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 5 (Mobile: spans 2 columns): Contact Info -->
+                <div class="col-span-2 md:col-span-4 lg:col-span-1 space-y-4">
+                    <h4 class="text-lg font-bold mb-4 text-[--apocalyptic-orange]">Contact</h4>
+                    <p class="text-sm flex items-center text-gray-700">
+                         <!-- Email Icon -->
+                        <svg class="w-5 h-5 text-[--apocalyptic-orange] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-6 13h-2a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2v10a2 2 0 01-2 2z"></path></svg>
+                        support@orangepulse.com
+                    </p>
+                    <p class="text-sm flex items-center text-gray-700">
+                        <!-- Phone Icon -->
+                        <svg class="w-5 h-5 text-[--apocalyptic-orange] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3v18m-4-7h8"></path></svg>
+                        +1 (555) PULSE-01
+                    </p>
+                </div>
+            </div>
+
+            <!-- Bottom Copyright Bar -->
+            <div class="text-center pt-6">
+                <p class="text-xs text-gray-500">
+                    © 2025 Orange Pulse, LLC. All Rights Reserved. | Designed and built with a passion for fitness.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- Mock Data ---
+        let cartData = [
+            { id: 1, name: "Premium Wireless Headset", price: 199.99, quantity: 1, imageUrl: "https://placehold.co/100x100/FF5A23/ffffff?text=Hst", color: "Midnight Blue" },
+            { id: 2, name: "Ergonomic Mechanical Keyboard", price: 129.50, quantity: 2, imageUrl: "https://placehold.co/100x100/FF5A23/ffffff?text=Kbd", color: "Arctic White" },
+            { id: 3, name: "4K Ultra-Wide Monitor", price: 450.00, quantity: 1, imageUrl: "https://placehold.co/100x100/FF5A23/ffffff?text=Mtr", color: "Matte Black" },
+            { id: 4, name: "Stainless Steel Water Bottle", price: 24.95, quantity: 3, imageUrl: "https://placehold.co/100x100/FF5A23/ffffff?text=Wtr", color: "Sunbeam Yellow" },
+        ];
+
+        // --- Constants and Elements ---
+        const SHIPPING_COST = 10.00;
+        const TAX_RATE = 0.08; // 8%
+        const cartItemsContainer = document.getElementById('cart-items');
+        const itemCountElement = document.getElementById('item-count');
+        const summaryItemCountElement = document.getElementById('summary-item-count');
+        const subtotalElement = document.getElementById('subtotal');
+        const taxEstimateElement = document.getElementById('tax-estimate');
+        const totalElement = document.getElementById('total');
+        const checkoutButton = document.getElementById('checkout-button');
+        const messageBox = document.getElementById('message-box');
+        const loadingIndicator = document.getElementById('loading-indicator');
+
+        // --- Helper Functions ---
+
+        /**
+         * Formats a number as a currency string.
+         * @param {number} amount
+         * @returns {string}
+         */
+        const formatCurrency = (amount) => {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 2,
+            }).format(amount);
+        };
+
+        /**
+         * Shows a message in the message box (non-blocking alternative to alert()).
+         * @param {string} message
+         * @param {string} type - 'success' or 'error'
+         */
+        const showMessage = (message, type = 'error') => {
+            messageBox.textContent = message;
+            messageBox.classList.remove('hidden', 'bg-red-100', 'text-red-700', 'bg-green-100', 'text-green-700', 'border-red-300', 'border-green-300');
+
+            if (type === 'success') {
+                messageBox.classList.add('bg-green-100', 'text-green-700', 'border-green-300');
+            } else {
+                messageBox.classList.add('bg-red-100', 'text-red-700', 'border-red-300');
+            }
+
+            setTimeout(() => {
+                messageBox.classList.add('hidden');
+            }, 3000);
+        };
+
+        // --- Core Logic ---
+
+        /**
+         * Calculates and updates all totals on the cart summary.
+         */
+        const updateCartTotals = () => {
+            const totalItems = cartData.reduce((sum, item) => sum + item.quantity, 0);
+            const subtotal = cartData.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const taxEstimate = subtotal * TAX_RATE;
+            const hasItems = cartData.length > 0;
+            const currentShippingCost = hasItems ? SHIPPING_COST : 0;
+            const orderTotal = subtotal + taxEstimate + currentShippingCost;
+
+            // Update UI
+            itemCountElement.textContent = cartData.length;
+            summaryItemCountElement.textContent = cartData.length;
+            subtotalElement.textContent = formatCurrency(subtotal);
+            taxEstimateElement.textContent = formatCurrency(taxEstimate);
+            document.getElementById('shipping-cost').textContent = formatCurrency(currentShippingCost);
+            totalElement.textContent = formatCurrency(orderTotal);
+
+            // Enable/Disable checkout button
+            if (hasItems) {
+                checkoutButton.disabled = false;
+                checkoutButton.textContent = `Proceed to Checkout (${formatCurrency(orderTotal)})`;
+            } else {
+                checkoutButton.disabled = true;
+                checkoutButton.textContent = 'Cart is Empty';
+            }
+        };
+
+        /**
+         * Handles quantity changes for a specific item.
+         * @param {number} itemId
+         * @param {number} newQuantity
+         */
+        const handleQuantityChange = (itemId, newQuantity) => {
+            const item = cartData.find(i => i.id === itemId);
+            if (item) {
+                // Ensure quantity is at least 1 and is a valid number
+                item.quantity = Math.max(1, parseInt(newQuantity, 10) || 1);
+                
+                // Update the input value and item total display
+                document.querySelector(`#qty-${itemId}`).value = item.quantity;
+                document.querySelector(`#item-total-${itemId}`).textContent = formatCurrency(item.price * item.quantity);
+                
+                // Recalculate totals
+                updateCartTotals();
+            }
+        };
+
+        /**
+         * Removes an item from the cart.
+         * @param {number} itemId
+         */
+        const handleRemoveItem = (itemId) => {
+            // Remove the item from the data array
+            cartData = cartData.filter(item => item.id !== itemId);
+            // Re-render the cart UI
+            renderCartItems();
+            // Recalculate totals
+            updateCartTotals();
+            showMessage('Item removed from cart.', 'success');
+        };
+
+        /**
+         * Creates the HTML structure for a single cart item.
+         * @param {object} item
+         * @returns {string} HTML string
+         */
+        const createCartItemHtml = (item) => {
+            return `
+                <div id="cart-item-${item.id}" class="flex flex-col md:flex-row items-start md:items-center p-4 border border-gray-200 rounded-xl transition duration-300 hover:bg-gray-50 hover:shadow-md">
+                    <!-- Image and Product Info -->
+                    <div class="flex items-center w-full md:w-3/5 space-x-4 mb-4 md:mb-0">
+                        <img src="${item.imageUrl}" alt="${item.name}" class="w-20 h-20 object-cover rounded-lg shadow-sm border border-gray-300">
+                        <div>
+                            <p class="font-semibold text-lg text-gray-900">${item.name}</p>
+                            <p class="text-sm text-gray-500">Color: ${item.color}</p>
+                            <p class="text-sm text-[--apocalyptic-orange] font-medium">${formatCurrency(item.price)} per item</p>
+                        </div>
+                    </div>
+
+                    <!-- Controls: Quantity, Total, Remove -->
+                    <div class="flex w-full md:w-2/5 justify-between items-center space-x-4">
+                        <!-- Quantity Control -->
+                        <div class="flex items-center space-x-2">
+                            <label for="qty-${item.id}" class="text-sm text-gray-600 hidden md:block">Qty:</label>
+                            <input
+                                type="number"
+                                id="qty-${item.id}"
+                                value="${item.quantity}"
+                                min="1"
+                                class="w-16 p-2 border border-gray-300 bg-white text-gray-800 rounded-lg text-center focus:ring-[--apocalyptic-orange] focus:border-[--apocalyptic-orange] text-sm"
+                                data-item-id="${item.id}"
+                                onchange="handleQuantityChange(${item.id}, this.value)"
+                                onkeyup="handleQuantityChange(${item.id}, this.value)"
+                            >
+                        </div>
+
+                        <!-- Item Total -->
+                        <div class="text-right flex-1 min-w-max">
+                            <p class="font-bold text-lg text-gray-900" id="item-total-${item.id}">
+                                ${formatCurrency(item.price * item.quantity)}
+                            </p>
+                        </div>
+
+                        <!-- Remove Button -->
+                        <button
+                            class="text-red-500 hover:text-red-700 transition duration-150 p-2 rounded-full hover:bg-red-50"
+                            aria-label="Remove ${item.name}"
+                            onclick="handleRemoveItem(${item.id})"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 7a1 1 0 011 1v7a1 1 0 11-2 0V8a1 1 0 011-1zm6 0a1 1 0 011 1v7a1 1 0 11-2 0V8a1 1 0 011-1z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            `;
+        };
+
+        /**
+         * Renders all items in the cartData array to the UI.
+         */
+        const renderCartItems = () => {
+            cartItemsContainer.innerHTML = ''; // Clear existing items
+
+            if (cartData.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="text-center p-12 text-gray-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-[--apocalyptic-orange]/70" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.5 14 6.354 14H15a1 1 0 000-2H6.354c-.334 0-.61-.23-.61-.555l.002-.016.282-1.127.683 1.365c.348.696 1.055 1.127 1.832 1.127H15a2 2 0 002-2V7a1 1 0 00-1-1H5.43l-.41-.984A1 1 0 003.882 4H3V1z" />
+                        </svg>
+                        <p class="text-xl font-medium">Your cart is empty.</p>
+                        <p class="mt-2 text-sm">Add some premium gear to ignite your potential!</p>
+                    </div>
+                `;
+            } else {
+                cartItemsContainer.innerHTML = cartData.map(createCartItemHtml).join('');
+            }
+        };
+
+        /**
+         * Initializes the cart page logic.
+         */
+        const initCart = () => {
+            // Simulate a slight delay for data loading
+            loadingIndicator.classList.add('hidden');
+            renderCartItems();
+            updateCartTotals();
+
+            // Setup listeners for checkout button (only for demonstration/error)
+            checkoutButton.addEventListener('click', () => {
+                showMessage("Simulated: Initiating secure checkout process...", 'success');
+            });
+        };
+
+        // --- Menu Logic (Required for Header) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.getElementById('menu-toggle');
+            const menuDropdown = document.getElementById('menu-dropdown');
+            
+            // Function to toggle the menu visibility
+            const toggleMenu = () => {
+                const isOpen = menuDropdown.classList.contains('menu-open');
+                
+                if (isOpen) {
+                    menuDropdown.classList.remove('menu-open');
+                    menuDropdown.classList.add('menu-closed');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                } else {
+                    menuDropdown.classList.remove('menu-closed');
+                    menuDropdown.classList.add('menu-open');
+                    menuToggle.setAttribute('aria-expanded', 'true');
+                }
+            };
+
+            // Event listener for the toggle button
+            menuToggle.addEventListener('click', (event) => {
+                event.stopPropagation();
+                toggleMenu();
+            });
+
+            // Close the menu when clicking outside of it
+            document.addEventListener('click', (event) => {
+                if (menuDropdown.classList.contains('menu-open') && !menuDropdown.contains(event.target) && event.target !== menuToggle) {
+                    toggleMenu();
+                }
+            });
+
+            // Close the menu when a link inside is clicked
+            menuDropdown.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (menuDropdown.classList.contains('menu-open')) {
+                        toggleMenu();
+                    }
+                });
+            });
+
+            // Start the cart app logic after DOM is ready
+            initCart();
+        });
+
+        // Expose functions to the global scope for use in inline HTML handlers
+        window.handleQuantityChange = handleQuantityChange;
+        window.handleRemoveItem = handleRemoveItem;
+
+        // Custom non-blocking alert for inline click handlers
+        window.alert = function(message) {
+            console.log("Alert suppressed: " + message);
+            showMessage(message, 'success');
+        };
+    </script>
+</body>
+</html>

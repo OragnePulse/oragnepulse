@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Orange Pulse</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Define Orange Pulse color variable */
+        :root {
+            --apocalyptic-orange: #FF5A23;
+            --dynamic-black: #161415;
+        }
+
+        /* Custom styles for the Inter font and smooth transitions */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+        }
+        
+        /* Style the main card to use the dark theme */
+        .login-card {
+            background-color: var(--dynamic-black);
+            color: #ffffff;
+        }
+
+        /* Style inputs to stand out against the dark background */
+        .login-card input {
+            background-color: #2c2b2d; /* Slightly lighter dark background for input */
+            border-color: #4a4a4a;
+            color: white;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        /* Input focus style using the orange accent */
+        .login-card input:focus {
+            outline: none;
+            border-color: var(--apocalyptic-orange);
+            box-shadow: 0 0 0 2px var(--apocalyptic-orange);
+        }
+
+        /* Style the primary orange button */
+        .btn-primary-orange {
+            background-color: var(--apocalyptic-orange);
+            color: white;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .btn-primary-orange:hover {
+            background-color: #e64f1d;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <!-- Login Card Container - Dark Themed with Orange Accent -->
+    <div 
+        class="w-full max-w-sm p-8 md:p-10 rounded-xl shadow-2xl border border-gray-700 transition-all duration-300 login-card"
+    >
+        <h1 class="text-3xl md:text-4xl font-extrabold mb-2 text-center text-white">
+            Welcome Back
+        </h1>
+        <p class="text-center text-gray-400 mb-8">
+            Please sign in to access your dashboard.
+        </p>
+
+        <!-- Form -->
+        <form id="loginForm" class="space-y-6">
+
+            <!-- Email Input -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    class="w-full px-4 py-2 border rounded-lg placeholder-gray-500 focus:ring-orange-500 transition duration-150 ease-in-out"
+                    placeholder="you@example.com"
+                >
+            </div>
+
+            <!-- Password Input -->
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-300 mb-1">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    class="w-full px-4 py-2 border rounded-lg placeholder-gray-500 focus:ring-orange-500 transition duration-150 ease-in-out"
+                    placeholder="Your secure password"
+                >
+            </div>
+            
+            <!-- Forgot Password Link -->
+            <div class="flex items-center justify-end">
+                <a href="#" class="text-sm font-medium text-orange-400 hover:text-orange-300 transition duration-150 ease-in-out">
+                    Forgot Password?
+                </a>
+            </div>
+
+            <!-- Error/Success Message Box -->
+            <div id="messageBox" class="hidden p-3 rounded-lg text-sm transition-opacity duration-300 ease-in-out"></div>
+
+
+            <!-- Submit Button (Orange Pulse Primary) -->
+            <button
+                type="submit"
+                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-base font-medium btn-primary-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-150 ease-in-out transform hover:scale-[1.01] active:scale-[0.99] focus:ring-offset-dynamic-black"
+            >
+                Log In
+            </button>
+        </form>
+
+        <!-- Signup Link -->
+        <div class="mt-6 text-center">
+            <p class="text-sm text-gray-400">
+                Don't have an account?
+                <a href="#" class="font-medium text-orange-400 hover:text-orange-300 transition duration-150 ease-in-out">
+                    Sign Up
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const messageBox = document.getElementById('messageBox');
+
+            // Clear previous messages and hide the box
+            messageBox.classList.add('hidden', 'opacity-0');
+            messageBox.textContent = '';
+            messageBox.className = 'p-3 rounded-lg text-sm transition-opacity duration-300 ease-in-out';
+
+            // Basic validation check
+            if (!email || password.length < 8) {
+                // Show Error
+                messageBox.classList.remove('hidden');
+                messageBox.classList.add('bg-red-900', 'text-red-300', 'opacity-100');
+                messageBox.textContent = 'Error: Please enter a valid email and a password of at least 8 characters.';
+            } else {
+                // Mock Success
+                messageBox.classList.remove('hidden');
+                messageBox.classList.add('bg-green-900', 'text-green-300', 'opacity-100');
+                messageBox.textContent = 'Login successful! Welcome, ' + email + '.';
+                // event.target.reset(); // Optionally clear form
+            }
+        });
+    </script>
+</body>
+</html>
